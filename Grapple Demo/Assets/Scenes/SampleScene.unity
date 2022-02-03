@@ -2797,8 +2797,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.26130676
-        value: 0.15404952
+        time: 0.24124946
+        value: 0.10209829
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -2994,7 +2994,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -3179,8 +3179,16 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2838082231984900411, guid: 3525447893a6db9478e02b345fc4e142, type: 3}
+      propertyPath: m_Mass
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2838082231984900411, guid: 3525447893a6db9478e02b345fc4e142, type: 3}
       propertyPath: m_Constraints
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2838082231984900411, guid: 3525447893a6db9478e02b345fc4e142, type: 3}
+      propertyPath: m_GravityScale
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7943723951132818445, guid: 3525447893a6db9478e02b345fc4e142, type: 3}
       propertyPath: m_Name

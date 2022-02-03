@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private float groundDetectionDistance = .1f;
     private float speed = 10f;
     private float jumpHeight = 10f;
-    public float ropeDistance = 200f;
+    public float ropeDistance = 1;
 
     void Start()
     {
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0) && ropeCheck == false)
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, lookPos, ropeDistance, grappleMask);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, lookPos, 10, grappleMask);
 
             if (hit.collider != null)
             {
@@ -89,13 +89,14 @@ public class PlayerController : MonoBehaviour
     {
         rope.enabled = true;
         rope.autoConfigureConnectedAnchor = false;
+        rope.autoConfigureDistance = false;
         rope.connectedAnchor = hit.point;
 
         float distanceFromPoint = Vector2.Distance(transform.position, hit.point);
 
-        rope.distance = distanceFromPoint * 0.01f;
-
-        rope.dampingRatio = 100f;
+        rope.distance = 0.5f;
+        rope.frequency = 0;
+        rope.dampingRatio = 1f;
 
         line.enabled = true;
         line.SetPosition(1, hit.point);
