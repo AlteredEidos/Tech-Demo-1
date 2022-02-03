@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     //variable
     public LayerMask grappleMask;
     LineRenderer line;
-    DistanceJoint2D rope;
+    SpringJoint2D rope;
     Rigidbody2D playerRB;
     private Vector2 velocity;
     private Vector2 lookPos;
@@ -19,15 +19,15 @@ public class PlayerController : MonoBehaviour
     private float groundDetectionDistance = .1f;
     private float speed = 10f;
     private float jumpHeight = 10f;
-    public float ropeDistance = 90f;
+    public float ropeDistance = 200f;
 
     void Start()
     {
         playerRB = GetComponent<Rigidbody2D>();
-        rope = gameObject.AddComponent<DistanceJoint2D>();
+        rope = gameObject.AddComponent<SpringJoint2D>();
         line = GetComponent<LineRenderer>();
         spawnPos = new Vector2 (0, 0);
-        levelLimit = new Vector2 (0, -10);
+        levelLimit = new Vector2 (0, -4.5f);
         line.enabled = false;
         rope.enabled = false;
     }
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
         //grapple
         line.SetPosition(0, transform.position);
 
-        lookPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        lookPos = Camera.main.ScreenToWorldPoint(Input.mousePosition)-transform.position;
         
         if (Input.GetMouseButtonDown(0) && ropeCheck == false)
         {
@@ -47,12 +47,14 @@ public class PlayerController : MonoBehaviour
             {
              ropeCheck = true;
              SetRope(hit);
+             doubleJump = false;
             }
         }
-        else if (Input.GetMouseButtonDown(0) && ropeCheck == true)
+        else if (Input.GetMouseButtonUp(0) && ropeCheck == true)
         {
             ropeCheck = false;
             DestroyRope();
+            doubleJump = true;
         }
         
         //player movemnet
@@ -86,7 +88,14 @@ public class PlayerController : MonoBehaviour
     void SetRope(RaycastHit2D hit)
     {
         rope.enabled = true;
+        rope.autoConfigureConnectedAnchor = false;
         rope.connectedAnchor = hit.point;
+
+        float distanceFromPoint = Vector2.Distance(transform.position, hit.point);
+
+        rope.distance = distanceFromPoint * 0.01f;
+
+        rope.dampingRatio = 100f;
 
         line.enabled = true;
         line.SetPosition(1, hit.point);
@@ -95,6 +104,6 @@ public class PlayerController : MonoBehaviour
     void DestroyRope()
     {
         rope.enabled = false;
-        rope.enabled = false;
+        line.enabled = false;
     }
 }
