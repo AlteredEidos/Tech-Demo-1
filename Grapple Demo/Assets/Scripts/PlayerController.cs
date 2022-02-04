@@ -18,8 +18,7 @@ public class PlayerController : MonoBehaviour
     private bool ropeCheck = false;
     private float groundDetectionDistance = .1f;
     private float speed = 10f;
-    private float jumpHeight = 10f;
-    public float ropeDistance = 1;
+    private float jumpHeight = 7.5f;
 
     void Start()
     {
@@ -35,20 +34,24 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //grapple
+        //set line in the player
         line.SetPosition(0, transform.position);
-
+        //tracks player mouse position
         lookPos = Camera.main.ScreenToWorldPoint(Input.mousePosition)-transform.position;
-        
+        //on left mouse click
         if (Input.GetMouseButtonDown(0) && ropeCheck == false)
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, lookPos, 10, grappleMask);
+            //send raycast
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, lookPos, 5, grappleMask);
 
+            //on hit set grapple
             if (hit.collider != null)
             {
              ropeCheck = true;
              SetRope(hit);
              doubleJump = false;
             }
+            //on left mouse up remove any grapple
         }
         else if (Input.GetMouseButtonUp(0) && ropeCheck == true)
         {
@@ -85,8 +88,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //set grapple
     void SetRope(RaycastHit2D hit)
     {
+        //set spring joint variables and location
         rope.enabled = true;
         rope.autoConfigureConnectedAnchor = false;
         rope.autoConfigureDistance = false;
@@ -98,10 +103,12 @@ public class PlayerController : MonoBehaviour
         rope.frequency = 0;
         rope.dampingRatio = 1f;
 
+        //set the line between 
         line.enabled = true;
         line.SetPosition(1, hit.point);
     }
 
+    //destroy grapple
     void DestroyRope()
     {
         rope.enabled = false;
