@@ -5,7 +5,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     //variable
+    public Camera mCam;
+    public Rigidbody2D gun;
     public LayerMask grappleMask;
+    public LayerMask jumpMask;
     LineRenderer line;
     SpringJoint2D rope;
     Rigidbody2D playerRB;
@@ -19,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private float groundDetectionDistance = .1f;
     private float speed = 10f;
     private float jumpHeight = 7.5f;
+    private float angle;
 
     void Start()
     {
@@ -32,7 +36,16 @@ public class PlayerController : MonoBehaviour
     }
     
     void Update()
-    {
+    {       
+        //follow camera
+        mCam.transform.position = new Vector3 (transform.position.x, transform.position.y, -10);        
+        gun.gameObject.transform.position = transform.position;
+
+        //gun rotation
+        angle = Mathf.Atan2(lookPos.y, lookPos.x) * Mathf.Rad2Deg;
+        //rotation of the light
+        gun.rotation = angle;
+
         //grapple
         //set line in the player
         line.SetPosition(0, transform.position);
@@ -67,7 +80,7 @@ public class PlayerController : MonoBehaviour
         //jump
         groundDetection = new Vector2(transform.position.x, transform.position.y-.75f);
 
-        if (Input.GetKeyDown(KeyCode.W) && Physics2D.Raycast(groundDetection, Vector2.down, groundDetectionDistance))
+        if (Input.GetKeyDown(KeyCode.W) && Physics2D.Raycast(groundDetection, Vector2.down, groundDetectionDistance, jumpMask))
         {
             velocity.y = jumpHeight;
             doubleJump = true;
