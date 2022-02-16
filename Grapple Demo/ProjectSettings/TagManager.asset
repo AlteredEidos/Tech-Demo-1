@@ -43,3 +43,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Player
+    uniqueID: 3619848885
+    locked: 0
+  - name: Pew
+    uniqueID: 709072251
+    locked: 0

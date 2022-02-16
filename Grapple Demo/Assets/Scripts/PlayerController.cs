@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     //variable
+    public GameObject bangSpawn;
     public Camera mCam;
     public Rigidbody2D gun;
     public LayerMask grappleMask;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private float jumpHeight = 7.5f;
     private float angle;
     public int health = 3;
+    public int ammo = 10;
 
     void Start()
     {
@@ -38,7 +40,7 @@ public class PlayerController : MonoBehaviour
     {
         //follow camera
         mCam.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
-        gun.gameObject.transform.position = transform.position;
+        gun.gameObject.transform.position = new Vector3(transform.position.x, transform.position.y, -1);
 
         //gun rotation
         angle = Mathf.Atan2(lookPos.y, lookPos.x) * Mathf.Rad2Deg;
@@ -54,7 +56,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && ropeCheck == false)
         {
             //send raycast
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, lookPos, 5, grappleMask);
+            RaycastHit2D hit = Physics2D.Raycast(bangSpawn.transform.position, lookPos, 5, grappleMask);
 
             //on hit set grapple
             if (hit.collider != null)
@@ -109,7 +111,7 @@ public class PlayerController : MonoBehaviour
         rope.autoConfigureDistance = false;
         rope.connectedAnchor = hit.point;
 
-        float distanceFromPoint = Vector2.Distance(transform.position, hit.point);
+        float distanceFromPoint = Vector2.Distance(bangSpawn.transform.position, hit.point);
 
         rope.distance = 0.5f;
         rope.frequency = 0;
