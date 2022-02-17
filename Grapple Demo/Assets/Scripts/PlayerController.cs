@@ -4,6 +4,7 @@ public class PlayerController : MonoBehaviour
 {
     //variable
     public GameObject bangSpawn;
+    public GameObject bang;
     public Camera mCam;
     public Rigidbody2D gun;
     public LayerMask grappleMask;
@@ -22,6 +23,9 @@ public class PlayerController : MonoBehaviour
     private float speed = 10f;
     private float jumpHeight = 7.5f;
     private float angle;
+    private float bangSpeed = 60f;
+    private float bangLifespan = 4f;
+
     public int health = 3;
     public int ammo = 10;
 
@@ -40,18 +44,32 @@ public class PlayerController : MonoBehaviour
     {
         //follow camera
         mCam.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
-        gun.gameObject.transform.position = new Vector3(transform.position.x, transform.position.y, -1);
+        gun.gameObject.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+
+        //tracks player mouse position
+        lookPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
 
         //gun rotation
         angle = Mathf.Atan2(lookPos.y, lookPos.x) * Mathf.Rad2Deg;
         //rotation of the gun
         gun.rotation = angle;
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            //create the bullet
+            GameObject b = Instantiate(bang, bangSpawn.transform.position, bangSpawn.transform.rotation, transform);
+            //igonore the guns collision
+            Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), GetComponent<CircleCollider2D>(), b.GetComponent<BoxCollider2D>());
+            //set the speed of the bullet
+            b.GetComponent<Rigidbody2D>().velocity = new Vector2(lookPos.x * bangSpeed, lookPos.y * bangSpeed);
+            //set how long the bullet will stay in scene for
+            Destroy(b, bangLifespan);
+        }
+
         //grapple
         //set line in the player
         line.SetPosition(0, transform.position);
-        //tracks player mouse position
-        lookPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        
         //on left mouse click
         if (Input.GetMouseButtonDown(1) && ropeCheck == false)
         {

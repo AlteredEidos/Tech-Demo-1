@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 5633828916494640101}
   - component: {fileID: 2838082231984900411}
   - component: {fileID: 1316666558}
-  - component: {fileID: 743984746}
   - component: {fileID: 743984745}
   m_Layer: 6
   m_Name: Player
@@ -103,6 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bangSpawn: {fileID: 0}
+  bang: {fileID: 8795439107920329829, guid: d239c2950c3b76b4b94df719ff6d4a42, type: 3}
   mCam: {fileID: 0}
   gun: {fileID: 0}
   grappleMask:
@@ -176,22 +176,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!58 &743984746
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7943723951132818445}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1
 --- !u!120 &743984745
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -232,7 +216,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 709072251
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}

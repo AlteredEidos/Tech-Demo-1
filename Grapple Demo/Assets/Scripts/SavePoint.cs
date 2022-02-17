@@ -7,26 +7,26 @@ public class SavePoint : MonoBehaviour
     public GameManager game;
     public Animator anim;
     private bool saving = false;
-    public bool saveAnimator;
-
-    void Update()
-    {
-        
-    }
-
+    
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.tag == "player")
+        if(collision.tag == "Player")
         {
             if (Input.GetKeyDown(KeyCode.E) && saving == false)
             {
                 saving = true;
+                StartCoroutine(Save());
+                Debug.Log("saving");
             }
         }
     }
-
-    private IEnumerator SaveProcess()
+    
+    IEnumerator Save()
     {
-        anim.SetBool("saveAnimator", saveAnimator);
+        game.SavePlayer();
+        anim.SetBool("saveAnimation", true);
+        yield return new WaitForSeconds(1);
+        anim.SetBool("saveAnimation", false);
+        saving = false;
     }
 }
