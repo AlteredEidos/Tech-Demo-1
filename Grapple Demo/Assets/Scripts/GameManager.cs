@@ -75,12 +75,11 @@ public class GameManager : MonoBehaviour
     {
         PlayerData data = SaveSystem.LoadPlayer();
 
-        level = data.level;
+        player.transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
 
-        SceneManager.LoadScene(level);
-
-        playerLocation.transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
-
-        player.spawnPos = new Vector3(data.position[0], data.position[1], data.position[2]);
+        if (level == 0)
+        {
+            SceneManager.LoadScene(data.level);
+        }
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     //variable
+    public PlayerData data;
     public GameObject bangSpawn;
     public GameObject bang;
     public Camera mCam;
