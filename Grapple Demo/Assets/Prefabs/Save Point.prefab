@@ -145,5 +145,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbea357652bd0f140beb0420c0b8c12f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  game: {fileID: 0}
+  game: {fileID: 3480286336700850379, guid: 06f33d78ea65fe646927b4ad734faa65, type: 3}
+  player: {fileID: 1652153672933329653, guid: 3525447893a6db9478e02b345fc4e142, type: 3}
   anim: {fileID: 1739224780061640864}

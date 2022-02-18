@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 velocity;
     private Vector2 lookPos;
     private Vector2 groundDetection;
-    private Vector2 spawnPos;
+    public Vector2 spawnPos;
     private Vector2 levelLimit;
     private bool doubleJump = false;
     private bool ropeCheck = false;
@@ -23,9 +23,6 @@ public class PlayerController : MonoBehaviour
     private float speed = 10f;
     private float jumpHeight = 7.5f;
     private float angle;
-    private float bangSpeed = 60f;
-    private float bangLifespan = 4f;
-
     public int health = 3;
     public int ammo = 10;
 
@@ -34,7 +31,6 @@ public class PlayerController : MonoBehaviour
         playerRB = GetComponent<Rigidbody2D>();
         rope = gameObject.AddComponent<SpringJoint2D>();
         line = GetComponent<LineRenderer>();
-        spawnPos = new Vector2(0, 0);
         levelLimit = new Vector2(0, -4.5f);
         line.enabled = false;
         rope.enabled = false;
@@ -54,16 +50,11 @@ public class PlayerController : MonoBehaviour
         //rotation of the gun
         gun.rotation = angle;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && ammo >= 1)
         {
-            //create the bullet
             GameObject b = Instantiate(bang, bangSpawn.transform.position, bangSpawn.transform.rotation, transform);
-            //igonore the guns collision
-            Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), GetComponent<CircleCollider2D>(), b.GetComponent<BoxCollider2D>());
-            //set the speed of the bullet
-            b.GetComponent<Rigidbody2D>().velocity = new Vector2(lookPos.x * bangSpeed, lookPos.y * bangSpeed);
-            //set how long the bullet will stay in scene for
-            Destroy(b, bangLifespan);
+            Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), b.GetComponent<BoxCollider2D>());
+            ammo--;
         }
 
         //grapple
@@ -117,6 +108,15 @@ public class PlayerController : MonoBehaviour
         if (transform.position.y <= levelLimit.y)
         {
             transform.position = spawnPos;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Ammo" && ammo <= 9)
+        {
+            Destroy(collision.gameObject);
+            ammo = 10;
         }
     }
 
