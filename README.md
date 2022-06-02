@@ -6,7 +6,10 @@ This demo has:
 - A working Gun
 - A working movement sytem
 - Post processing Effects
-![](Untitled video ‐ Made with Clipchamp.gif)
+
+![](https://github.com/AlteredEidos/Tech-Demo-1/blob/main/Untitled%20video%20%E2%80%90%20Made%20with%20Clipchamp%20(1).gif)
+
 - Working UI
 - Save/Load System
-![](Untitled video ‐ Made with Clipchamp (1).gif)
+
+![](https://github.com/AlteredEidos/Tech-Demo-1/blob/main/Untitled%20video%20%E2%80%90%20Made%20with%20Clipchamp.gif)
